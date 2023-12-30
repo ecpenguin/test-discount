@@ -2,18 +2,18 @@
 
 name = "discount-app"
 client_id = "6d2fdf0ac6fc96fd0a48750c606743d8"
-application_url = "https://arthritis-terrorists-minds-canal.trycloudflare.com"
+application_url = "https://fd-hilton-barry-canada.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products, read_products"
+scopes = "write_products, read_products, write_metaobject_definitions, write_metaobjects, read_metaobjects"
 
 [auth]
 redirect_urls = [
-  "https://arthritis-terrorists-minds-canal.trycloudflare.com/auth/callback",
-  "https://arthritis-terrorists-minds-canal.trycloudflare.com/auth/shopify/callback",
-  "https://arthritis-terrorists-minds-canal.trycloudflare.com/api/auth/callback"
+  "https://fd-hilton-barry-canada.trycloudflare.com/auth/callback",
+  "https://fd-hilton-barry-canada.trycloudflare.com/auth/shopify/callback",
+  "https://fd-hilton-barry-canada.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
