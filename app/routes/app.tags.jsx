@@ -14,7 +14,7 @@ import {
   InlineStack,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
-import { createMetaObjectDefinition } from "../models/MetaObject.server";
+import { createMetaObjectDefinition, createMetaObjectEntry } from "../models/MetaObject.server";
 
 export const loader = async ({ request }) => {
   await authenticate.admin(request);
@@ -60,12 +60,16 @@ export const action = async ({ request }) => {
   );
   const responseJson = await response.json();
 
-  // Create a metaobject
-  const createMetaObject = await createMetaObjectDefinition(admin.graphql);
-
+  // Create a metaobject definition
+  const metaObjectDefinition = await createMetaObjectDefinition(admin.graphql);
+  // Create a metaobject entry
+  
+  const metaObjectEntry = await createMetaObjectEntry(admin.graphql);
+  
   return json({
     product: responseJson.data.productCreate.product,
-    createMetaObject: createMetaObject
+    createMetaObjectDefinition: metaObjectDefinition,
+    createMetaObjectEntry: metaObjectEntry
   });
 };
 
@@ -86,7 +90,8 @@ export default function Index() {
     }
   }, [productId]);
   const generateProduct = () => submit({}, { replace: true, method: "POST" });
-  const generateMetaobject = () => submit({ action: 'createMetaObject' }, { replace: true, method: "POST" });
+  const generateMetaobjectDefinition = () => submit({ action: 'createMetaObjectDefinition' }, { replace: true, method: "POST" });
+  const generateMetaobjectEntry = () => submit({ action: 'createMetaObjectEntry' }, { replace: true, method: "POST" });
   
   return (
     <Page>
@@ -94,8 +99,11 @@ export default function Index() {
         <button variant="primary" onClick={generateProduct}>
           Generate a product
         </button>
-        <button onClick={generateMetaobject}>
-          Generate a metaobject
+        <button onClick={generateMetaobjectDefinition}>
+          Generate a metaobject definition
+        </button>
+        <button onClick={generateMetaobjectEntry}>
+          Generate a metaobject entry
         </button>
       </ui-title-bar>
       <BlockStack gap="500">

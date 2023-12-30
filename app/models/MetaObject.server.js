@@ -47,4 +47,46 @@ export async function createMetaObjectDefinition(graphql) {
     const data = await response.json();
     
     return data;
-  }
+}
+
+export async function createMetaObjectEntry(graphql) {
+    const response = await graphql(
+    `#graphql
+    mutation CreateMetaobject($metaobject: MetaobjectCreateInput!) {
+        metaobjectCreate(metaobject: $metaobject) {
+        metaobject {
+            handle
+            season: field(key: "season") {
+            value
+            }
+        }
+        userErrors {
+            field
+            message
+            code
+        }
+        }
+    }`,
+    {
+        variables: {
+            "metaobject": {
+                "type": "tag_discounts",
+                "handle": "discount1",
+                "fields": [
+                    {
+                        "key": "tag_name",
+                        "value": "50OFF"
+                    },
+                    {
+                        "key": "discount_rate",
+                        "value": "50"
+                    }
+                ]
+            }
+        },
+    },
+    );
+
+    const data = await response.json();
+    return data;
+}
